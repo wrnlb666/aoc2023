@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -54,18 +55,23 @@ int main(int argc, char* argv[]) {
     int32_t curr;
     int32_t sum = 0;
 
-    size_t buf_size = 50;
+    size_t buf_size = 100;
     char* buf = malloc(sizeof (char) * buf_size);
 
     while (true) {
         line += 1;
         // get the current line
         int len = getline(&buf, &buf_size, fp);
+        // buf = fgets(buf, buf_size, fp);
 
         // break if eof
         if (len == -1) {
             break;
         }
+        // if (buf == NULL) {
+        //     break;
+        // }
+        // int len = strlen(buf);
 
         // set left and right to initial state
         left = -1;
