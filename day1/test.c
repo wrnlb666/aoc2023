@@ -103,9 +103,9 @@ int main(int argc, char* argv[]) {
         printf("line %3d, curr: %4d, str: %.*s\n", line, curr, len - 1, buf);
         sum += curr;
     }
-    printf("sum: %d\n", sum);
-
+    free(buf);
     fclose(fp);
+    printf("sum: %d\n", sum);
 
     return 0;
 }
