@@ -1,8 +1,13 @@
 CC = gcc
 CFLAG = -Wall -Wextra -std=c11 -pedantic -g
 
-.PHONY: test
+.PHONY: part1 part2
 
-test: test.c 
+part1: part1.c 
 	$(CC) $(CFLAG) $< -o $@
 	./$@ puzzle.txt
+
+part2: part2.c 
+	$(CC) $(CFLAG) $< -o $@
+	./$@ puzzle.txt
+

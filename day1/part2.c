@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
         
         // calculate result
         curr = left * 10 + right;
-        printf("line %3d, curr: %4d, str: %.*s\n", line, curr, len - 1, buf);
+        // printf("line %3d, curr: %4d, str: %.*s\n", line, curr, len - 1, buf);
         sum += curr;
     }
     free(buf);
