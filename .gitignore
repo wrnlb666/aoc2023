@@ -4,6 +4,7 @@
 # Binaries for programs and plugins
 *.exe
 *.exe~
+*.elf
 *.dll
 *.so
 *.dylib
@@ -25,3 +26,5 @@ go.work
 test
 part1
 part2
+
+
