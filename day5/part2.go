@@ -5,6 +5,7 @@ import (
     "io"
     "log"
     "fmt"
+    "sync"
     "strconv"
     "strings"
 )
@@ -80,31 +81,36 @@ func main() {
 
     var min_num int64 = 9999999999
     var res [][2]int64
+    var wg sync.WaitGroup
+    wg.Add(len(seeds)/2)
     for i := 0; i < len(seeds); i+= 2 {
-        for s := seeds[i]; s < seeds[i] + seeds[i+1]; s++ {
-            curr := s
-            for i := range res {
-                if s >= res[i][0] && s < res[i][1] {
-                    continue
-                }
-            }
-            for i := range maps {
-                for j := range maps[i] {
-                    if curr >= maps[i][j][1] && curr < maps[i][j][1] + maps[i][j][2] {
-                        offset := curr - maps[i][j][1]
-                        curr = maps[i][j][0] + offset
-                        break
+        go func(i int) {
+            defer wg.Done()
+            for s := seeds[i]; s < seeds[i] + seeds[i+1]; s++ {
+                curr := s
+                for i := range res {
+                    if s >= res[i][0] && s < res[i][1] {
+                        continue
                     }
                 }
+                for i := range maps {
+                    for j := range maps[i] {
+                        if curr >= maps[i][j][1] && curr < maps[i][j][1] + maps[i][j][2] {
+                            offset := curr - maps[i][j][1]
+                            curr = maps[i][j][0] + offset
+                            break
+                        }
+                    }
+                }
+                if curr < min_num {
+                    min_num = curr
+                }
             }
-            if curr < min_num {
-                min_num = curr
-            }
-        }
-        res = append(res, [2]int64{seeds[i], seeds[i]+seeds[i+1]})
-        fmt.Println("done")
+            res = append(res, [2]int64{seeds[i], seeds[i]+seeds[i+1]})
+            fmt.Println("done")
+        }(i)
     }
-
+    wg.Wait()
     fmt.Println(min_num)
 }
 
